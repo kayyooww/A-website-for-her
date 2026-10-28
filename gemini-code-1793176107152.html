@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For My Cupcakes — Our 4-Year Promise</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Cormorant Garamond (Romantic Serif), Plus Jakarta Sans (Clean Body), Great Vibes (Script) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            pastel: {
+              peach: '#ffb5a7',
+              pink: '#ffcad4',
+              lavender: '#d8bbff',
+              periwinkle: '#b5b9ff',
+              cream: '#fdf0ed',
+              dark: '#4a3548',
+              muted: '#7d657b'
+            }
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            script: ['"Great Vibes"', 'cursive']
+          },
+          animation: {
+            'float-slow': 'float 6s ease-in-out infinite',
+            'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
+            'spin-slow': 'spin 8s linear infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-12px)' },
+            },
+            pulseGlow: {
+              '0%, 100%': { boxShadow: '0 0 15px rgba(255, 181, 167, 0.4), 0 0 30px rgba(216, 187, 255, 0.3)' },
+              '50%': { boxShadow: '0 0 25px rgba(255, 181, 167, 0.8), 0 0 45px rgba(216, 187, 255, 0.6)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Base Custom Styling & Background Mesh */
+    body {
+      background-color: #fdf0ed;
+      background-image: 
+        radial-gradient(at 10% 10%, rgba(255, 202, 212, 0.55) 0px, transparent 50%),
+        radial-gradient(at 90% 15%, rgba(216, 187, 255, 0.5) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(253, 240, 237, 0.8) 0px, transparent 60%),
+        radial-gradient(at 15% 85%, rgba(181, 185, 255, 0.45) 0px, transparent 50%),
+        radial-gradient(at 85% 90%, rgba(255, 181, 167, 0.5) 0px, transparent 50%);
+      background-attachment: fixed;
+      color: #4a3548;
+      overflow-x: hidden;
+    }
+
+    /* Glassmorphism Utilities */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 10px 35px -5px rgba(181, 140, 175, 0.15), 0 0 15px rgba(255, 202, 212, 0.25);
+    }
+
+    .glass-card-hover {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .glass-card-hover:hover {
+      transform: translateY(-6px);
+      background: rgba(255, 255, 255, 0.82);
+      border-color: #ffcad4;
+      box-shadow: 0 18px 40px -5px rgba(181, 140, 175, 0.25), 0 0 25px rgba(216, 187, 255, 0.5);
+    }
+
+    /* Polaroid Frame Styling */
+    .polaroid {
+      background: #ffffff;
+      padding: 12px 12px 32px 12px;
+      box-shadow: 0 12px 28px rgba(74, 53, 72, 0.12);
+      border-radius: 6px;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+    .polaroid:hover {
+      transform: scale(1.03) rotate(0deg) !important;
+      box-shadow: 0 20px 35px rgba(74, 53, 72, 0.2);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #fdf0ed;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(to bottom, #ffb5a7, #d8bbff);
+      border-radius: 9999px;
+    }
+
+    /* Shake Animation for Wrong Passcode */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+    .animate-shake {
+      animation: shake 0.45s ease-in-out;
+    }
+
+    /* Envelope Seal Glow */
+    .wax-seal {
+      background: linear-gradient(135deg, #ffb5a7 0%, #d8bbff 100%);
+      box-shadow: 0 4px 12px rgba(255, 181, 167, 0.5);
+    }
+  </style>
+</head>
+<body class="font-sans antialiased selection:bg-pastel-pink selection:text-pastel-dark relative">
+
+  <!-- ==========================================
+       BACKGROUND FLOATING PARTICLES CANVAS
+  =========================================== -->
+  <canvas id="particle-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- ==========================================
+       FLOATING NAVIGATION BAR
+  =========================================== -->
+  <header class="fixed top-4 left-0 right-0 z-40 px-4">
+    <nav class="max-w-4xl mx-auto glass-card rounded-full px-6 py-3 flex items-center justify-between">
+      <a href="#hero" class="flex items-center gap-2 group">
+        <span class="w-8 h-8 rounded-full bg-gradient-to-tr from-pastel-peach to-pastel-lavender flex items-center justify-center text-white shadow-sm group-hover:scale-110 transition-transform">
+          <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+        </span>
+        <span class="font-serif font-bold text-lg tracking-wide text-pastel-dark">For My Cupcakes</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium text-pastel-muted">
+        <a href="#hero" class="hover:text-pastel-dark transition-colors">Countdown</a>
+        <a href="#timeline" class="hover:text-pastel-dark transition-colors">Our 1st Year</a>
+        <a href="#vault" class="hover:text-pastel-dark transition-colors flex items-center gap-1">
+          <i data-lucide="lock" class="w-3.5 h-3.5 text-pastel-peach"></i> Video Vault
+        </a>
+        <a href="#open-when" class="hover:text-pastel-dark transition-colors">Open When</a>
+        <a href="#promise" class="hover:text-pastel-dark transition-colors">My Promise</a>
+      </div>
+
+      <!-- Easter Egg Progress Counter -->
+      <button onclick="showEasterEggHint()" class="flex items-center gap-1.5 bg-white/80 hover:bg-white px-3 py-1.5 rounded-full text-xs font-semibold text-pastel-dark border border-pastel-pink/60 shadow-sm transition-all" title="Click for a hint!">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-pastel-peach"></i>
+        <span>Secrets: <span id="egg-counter">0</span>/3</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- ==========================================
+       FLOATING CUPCAKE EASTER EGG (#1)
+  =========================================== -->
+  <button 
+    onclick="triggerEasterEgg(1)" 
+    class="fixed bottom-6 left-6 z-40 group glass-card p-3.5 rounded-full hover:scale-110 transition-all duration-300 animate-float-slow shadow-lg border-pastel-pink"
+    title="Psst... click the cupcake!"
+  >
+    <div class="relative">
+      <i data-lucide="cake" class="w-6 h-6 text-pastel-peach group-hover:text-pink-500 transition-colors"></i>
+      <span class="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-pastel-peach opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-pink-400"></span>
+      </span>
+    </div>
+  </button>
+
+  <!-- ==========================================
+       FLOATING MUSIC PLAYER ("Bibbidi-Bobbidi" & "Lavay")
+  =========================================== -->
+  <div class="fixed bottom-6 right-6 z-40">
+    <div class="glass-card rounded-2xl p-3.5 flex items-center gap-3.5 shadow-xl border border-white/90 max-w-xs sm:max-w-sm">
+      <!-- Spinning Vinyl Record -->
+      <div id="vinyl-disc" class="w-12 h-12 rounded-full bg-gradient-to-tr from-pastel-dark via-pastel-muted to-pastel-lavender p-1 flex items-center justify-center shadow-inner relative shrink-0">
+        <div class="w-4 h-4 rounded-full bg-pastel-cream border-2 border-pastel-peach"></div>
+      </div>
+
+      <!-- Song Info -->
+      <div class="min-w-0 flex-1">
+        <div class="flex items-center gap-1.5">
+          <span class="inline-block w-2 h-2 rounded-full bg-pastel-peach animate-pulse"></span>
+          <p class="text-[10px] uppercase tracking-wider font-semibold text-pastel-muted">Cupcakes' Vibe Playlist</p>
+        </div>
+        <p id="track-title" class="text-sm font-bold text-pastel-dark truncate">Bibbidi-Bobbidi (Our Magic Vibe)</p>
+        <p id="track-artist" class="text-xs text-pastel-muted truncate">Track 1 • Click play for cozy synth</p>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex items-center gap-1">
+        <button onclick="toggleMusic()" id="play-btn" class="w-9 h-9 rounded-full bg-gradient-to-r from-pastel-peach to-pastel-lavender text-white flex items-center justify-center shadow-md hover:opacity-90 transition">
+          <i data-lucide="play" id="play-icon" class="w-4 h-4 fill-current ml-0.5"></i>
+        </button>
+        <button onclick="nextTrack()" class="w-8 h-8 rounded-full hover:bg-white/60 text-pastel-dark flex items-center justify-center transition" title="Switch Track (Bibbidi-Bobbidi / Lavay)">
+          <i data-lucide="skip-forward" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Optional HTML5 Audio Element (Replace src with actual MP3 files if desired; includes gentle Web-Audio Chime synth fallback!) -->
+    <audio id="bg-audio" loop></audio>
+  </div>
+
+  <!-- ==========================================
+       SECTION A: HERO LANDING & LIVE COUNTDOWN
+  =========================================== -->
+  <section id="hero" class="relative min-h-screen flex items-center justify-center pt-28 pb-20 px-4 z-10">
+    <div class="max-w-4xl mx-auto text-center">
+      
+      <!-- Personalized Nickname Badge -->
+      <div class="inline-flex items-center gap-2 glass-card px-5 py-2 rounded-full mb-6 animate-float-slow">
+        <i data-lucide="sparkles" class="w-4 h-4 text-pastel-peach"></i>
+        <span class="text-xs sm:text-sm font-semibold tracking-wide text-pastel-dark">
+          Dedicated to my sweetest <span class="text-pink-500 underline decoration-pastel-pink decoration-wavy underline-offset-4">Cupcakes</span> 🧁
+        </span>
+        <!-- Hidden Star Easter Egg (#2) -->
+        <button onclick="triggerEasterEgg(2)" class="ml-1 text-pastel-lavender hover:text-yellow-400 transition-transform hover:scale-125" title="A tiny secret star...">
+          <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+        </button>
+      </div>
+
+      <!-- Main Romantic Heading -->
+      <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold text-pastel-dark leading-tight mb-6">
+        Counting the Days Until <br />
+        <span class="bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent italic font-normal">
+          We're Together Again
+        </span>
+      </h1>
+
+      <p class="max-w-2xl mx-auto text-base sm:text-lg text-pastel-muted leading-relaxed mb-10">
+        Hey Cupcakes, four years of studying abroad might put miles between us on a map, 
+        but not a single millimeter between our hearts. This website is my digital promise ring to you—a safe 
+        place holding our first year of memories, 30+ secret videos, and my unwavering commitment to our future.
+      </p>
+
+      <!-- Live 4-Year Countdown Card -->
+      <div class="glass-card rounded-3xl p-6 sm:p-10 mb-10 max-w-3xl mx-auto animate-pulse-glow">
+        <div class="flex items-center justify-between flex-wrap gap-2 mb-6 border-b border-pastel-pink/40 pb-4">
+          <div class="flex items-center gap-2 text-left">
+            <i data-lucide="calendar-heart" class="w-5 h-5 text-pastel-peach"></i>
+            <span class="text-xs sm:text-sm font-semibold uppercase tracking-widest text-pastel-muted">
+              Countdown to Our Forever Reunion
+            </span>
+          </div>
+          <span id="target-date-label" class="text-xs font-medium bg-pastel-pink/30 text-pastel-dark px-3 py-1 rounded-full">
+            Departure: 4-Year Study Journey
+          </span>
+        </div>
+
+        <!-- Countdown Digits Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+          <div class="bg-white/75 rounded-2xl p-4 shadow-sm border border-pastel-pink/40">
+            <div id="cd-days" class="font-serif text-4xl sm:text-5xl font-bold text-pastel-dark">1461</div>
+            <div class="text-xs uppercase tracking-widest text-pastel-muted mt-1 font-semibold">Days</div>
+          </div>
+          <div class="bg-white/75 rounded-2xl p-4 shadow-sm border border-pastel-lavender/40">
+            <div id="cd-hours" class="font-serif text-4xl sm:text-5xl font-bold text-pastel-dark">00</div>
+            <div class="text-xs uppercase tracking-widest text-pastel-muted mt-1 font-semibold">Hours</div>
+          </div>
+          <div class="bg-white/75 rounded-2xl p-4 shadow-sm border border-pastel-periwinkle/40">
+            <div id="cd-minutes" class="font-serif text-4xl sm:text-5xl font-bold text-pastel-dark">00</div>
+            <div class="text-xs uppercase tracking-widest text-pastel-muted mt-1 font-semibold">Minutes</div>
+          </div>
+          <div class="bg-white/75 rounded-2xl p-4 shadow-sm border border-pastel-peach/40">
+            <div id="cd-seconds" class="font-serif text-4xl sm:text-5xl font-bold text-pink-500">00</div>
+            <div class="text-xs uppercase tracking-widest text-pastel-muted mt-1 font-semibold">Seconds</div>
+          </div>
+        </div>
+
+        <!-- Journey Progress Bar -->
+        <div class="text-left">
+          <div class="flex justify-between text-xs font-semibold text-pastel-muted mb-2">
+            <span>Departure Day</span>
+            <span id="journey-percent">Our 4-Year Bridge in Progress...</span>
+            <span>Home in Your Arms</span>
+          </div>
+          <div class="w-full h-3 bg-white/80 rounded-full overflow-hidden p-0.5 border border-pastel-pink/50">
+            <div id="journey-bar" class="h-full rounded-full bg-gradient-to-r from-pastel-peach via-pastel-pink to-pastel-lavender transition-all duration-1000" style="width: 8%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a href="#timeline" class="px-7 py-3.5 rounded-full bg-gradient-to-r from-pastel-peach to-pastel-lavender text-pastel-dark font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center gap-2">
+          <span>Walk Down Memory Lane</span>
+          <i data-lucide="arrow-down-right" class="w-4 h-4"></i>
+        </a>
+        <a href="#vault" class="px-7 py-3.5 rounded-full glass-card text-pastel-dark font-semibold hover:bg-white/90 transition-all flex items-center gap-2">
+          <i data-lucide="key-round" class="w-4 h-4 text-pastel-peach"></i>
+          <span>Unlock 30+ Video Vault</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SECTION B: OUR JOURNEY & MEMORY LANE (1-YEAR TIMELINE)
+  =========================================== -->
+  <section id="timeline" class="py-24 px-4 relative z-10">
+    <div class="max-w-5xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <span class="text-xs font-bold uppercase tracking-widest text-pink-500 bg-pastel-pink/30 px-4 py-1.5 rounded-full">
+          Chapter One: 365 Days of Magic
+        </span>
+        <h2 class="font-serif text-4xl sm:text-5xl font-bold text-pastel-dark mt-4 mb-4">
+          Our Journey & Memory Lane
+        </h2>
+        <p class="max-w-xl mx-auto text-pastel-muted text-sm sm:text-base">
+          Every date, every nervous laugh, and every quiet moment from our first year together is etched into my heart. Here are the milestones that built us.
+        </p>
+      </div>
+
+      <!-- Vertical Timeline Container -->
+      <div class="relative">
+        <!-- Center Glowing Line -->
+        <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-pastel-peach via-pastel-lavender to-pastel-periwinkle rounded-full"></div>
+
+        <!-- Timeline Items Injected via JS for Clean Editing -->
+        <div id="timeline-container" class="space-y-12 md:space-y-16"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SECTION C: THE SECRET CODE-LOCKED VIDEO VAULT (30+ VIDEOS)
+  =========================================== -->
+  <section id="vault" class="py-24 px-4 relative z-10">
+    <div class="max-w-6xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="text-center mb-12">
+        <span class="text-xs font-bold uppercase tracking-widest text-purple-600 bg-pastel-lavender/40 px-4 py-1.5 rounded-full">
+          For Cupcakes' Eyes Only
+        </span>
+        <h2 class="font-serif text-4xl sm:text-5xl font-bold text-pastel-dark mt-4 mb-4">
+          The Secret Video Vault
+        </h2>
+        <p class="max-w-xl mx-auto text-pastel-muted text-sm sm:text-base">
+          I recorded and collected 32 videos for you—vlogs, late-night talks, goofy dates, and messages for the next 4 years. Enter our secret passcode to open the vault.
+        </p>
+      </div>
+
+      <!-- LOCKED STATE VIEW -->
+      <div id="vault-locked" class="max-w-lg mx-auto glass-card rounded-3xl p-8 sm:p-10 text-center relative overflow-hidden">
+        <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-pastel-peach to-pastel-lavender mx-auto flex items-center justify-center text-white shadow-lg mb-6">
+          <i data-lucide="lock-keyhole" class="w-9 h-9"></i>
+        </div>
+
+        <h3 class="font-serif text-2xl sm:text-3xl font-bold text-pastel-dark mb-2">
+          32 Memories Locked Inside
+        </h3>
+        <p class="text-xs sm:text-sm text-pastel-muted mb-6">
+          Hint: <span class="italic font-medium text-pastel-dark">"Your sweet nickname (singular) + the number of years I'll be studying"</span> (e.g., <code class="bg-white/80 px-2 py-0.5 rounded text-pink-500">CUPCAKE4</code>)
+        </p>
+
+        <form onsubmit="unlockVault(event)" class="space-y-4">
+          <div id="passcode-box" class="relative">
+            <input 
+              type="text" 
+              id="vault-input" 
+              placeholder="Enter Secret Passcode..." 
+              class="w-full px-5 py-3.5 rounded-2xl bg-white/90 border-2 border-pastel-pink focus:border-pastel-lavender focus:outline-none text-center font-bold tracking-widest text-pastel-dark uppercase placeholder:normal-case placeholder:tracking-normal placeholder:font-normal"
+              autocomplete="off"
+            />
+          </div>
+          <p id="vault-error" class="text-xs text-rose-500 font-medium hidden">
+            Hmm, that's not quite right, Cupcakes! Try typing: CUPCAKE4
+          </p>
+          <button 
+            type="submit" 
+            class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-pastel-peach via-pastel-pink to-pastel-lavender text-pastel-dark font-bold shadow-md hover:shadow-lg hover:scale-[1.01] transition-all flex items-center justify-center gap-2"
+          >
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+            <span>Unlock Our 32 Videos</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- UNLOCKED STATE VIEW (Hidden Until Unlocked) -->
+      <div id="vault-unlocked" class="hidden space-y-10 transition-all duration-700">
+        
+        <!-- Unlocked Banner & Filter Controls -->
+        <div class="glass-card rounded-2xl p-4 sm:p-6 flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
+              <i data-lucide="unlock" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-pastel-dark text-sm sm:text-base">Vault Unlocked, Welcome Cupcakes!</h4>
+              <p class="text-xs text-pastel-muted">Showing all 32 personal video memories & messages</p>
+            </div>
+          </div>
+
+          <!-- View Switcher / Filter Pills -->
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="filterVideos('all')" class="vault-filter-btn active px-3.5 py-1.5 rounded-full text-xs font-semibold bg-pastel-dark text-white transition">
+              All 32 Videos
+            </button>
+            <button onclick="filterVideos('Favorites')" class="vault-filter-btn px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/80 text-pastel-dark hover:bg-white transition">
+              Our Favorites
+            </button>
+            <button onclick="filterVideos('Dates & Trips')" class="vault-filter-btn px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/80 text-pastel-dark hover:bg-white transition">
+              Dates & Trips
+            </button>
+            <button onclick="filterVideos('Future Letters')" class="vault-filter-btn px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/80 text-pastel-dark hover:bg-white transition">
+              4-Year Messages
+            </button>
+          </div>
+        </div>
+
+        <!-- Netflix-Style Featured Horizontal Carousel -->
+        <div>
+          <div class="flex items-center justify-between mb-3 px-1">
+            <h3 class="font-serif text-2xl font-bold text-pastel-dark flex items-center gap-2">
+              <i data-lucide="flame" class="w-5 h-5 text-pastel-peach"></i>
+              Featured Highlights Reel (Swipe / Scroll)
+            </h3>
+            <div class="flex gap-2">
+              <button onclick="scrollCarousel(-1)" class="p-2 rounded-full glass-card hover:bg-white transition">
+                <i data-lucide="chevron-left" class="w-4 h-4"></i>
+              </button>
+              <button onclick="scrollCarousel(1)" class="p-2 rounded-full glass-card hover:bg-white transition">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+          <div id="video-carousel" class="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth">
+            <!-- Featured Row Injected via JS -->
+          </div>
+        </div>
+
+        <!-- Complete 32-Video Clickable Grid Gallery -->
+        <div>
+          <h3 class="font-serif text-2xl font-bold text-pastel-dark mb-4 px-1 flex items-center gap-2">
+            <i data-lucide="film" class="w-5 h-5 text-pastel-lavender"></i>
+            Complete Video Archive (<span id="video-count-label">32</span>)
+          </h3>
+          <div id="video-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            <!-- 32 Video Cards Injected via JS -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SECTION D: "OPEN WHEN" DIGITAL ENVELOPES
+  =========================================== -->
+  <section id="open-when" class="py-24 px-4 relative z-10">
+    <div class="max-w-6xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <span class="text-xs font-bold uppercase tracking-widest text-pink-500 bg-pastel-pink/30 px-4 py-1.5 rounded-full">
+          Letters Across Time & Distance
+        </span>
+        <h2 class="font-serif text-4xl sm:text-5xl font-bold text-pastel-dark mt-4 mb-4">
+          "Open When..." Letters
+        </h2>
+        <p class="max-w-xl mx-auto text-pastel-muted text-sm sm:text-base">
+          Whenever the time zone difference feels heavy or you just need to hear my voice in your head, click an envelope below to break the wax seal.
+        </p>
+      </div>
+
+      <!-- Envelopes Grid -->
+      <div id="envelopes-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Populated via JS -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SECTION E: THE DIGITAL PROMISE RING & REASONS I LOVE YOU
+  =========================================== -->
+  <section id="promise" class="py-24 px-4 relative z-10">
+    <div class="max-w-4xl mx-auto">
+      
+      <div class="glass-card rounded-3xl p-8 sm:p-14 text-center relative overflow-hidden border-2 border-white">
+        
+        <!-- Interactive Digital Promise Ring SVG -->
+        <div class="relative w-32 h-32 mx-auto mb-6 flex items-center justify-center">
+          <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-pastel-peach via-pastel-pink to-pastel-lavender opacity-40 blur-xl animate-pulse"></div>
+          <button onclick="triggerEasterEgg(3)" class="relative z-10 group focus:outline-none" title="Click the diamond of my promise ring!">
+            <svg class="w-28 h-28 transform group-hover:scale-110 transition-transform duration-500" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Ring Band -->
+              <circle cx="60" cy="70" r="34" stroke="url(#ringGrad)" stroke-width="7" />
+              <circle cx="60" cy="70" r="30" stroke="#ffffff" stroke-width="1.5" stroke-opacity="0.8" />
+              <!-- Diamond Gem -->
+              <polygon points="60,16 45,30 60,42 75,30" fill="url(#diamondGrad)" stroke="#ffffff" stroke-width="2"/>
+              <polygon points="45,30 75,30 68,20 52,20" fill="#ffffff" fill-opacity="0.6"/>
+              <!-- Sparkles -->
+              <circle cx="35" cy="22" r="2.5" fill="#ffb5a7" />
+              <circle cx="85" cy="22" r="2.5" fill="#d8bbff" />
+              <circle cx="60" cy="8" r="2" fill="#ffcad4" />
+              <defs>
+                <linearGradient id="ringGrad" x1="20" y1="35" x2="100" y2="105" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#ffb5a7"/>
+                  <stop offset="0.5" stop-color="#ffcad4"/>
+                  <stop offset="1" stop-color="#d8bbff"/>
+                </linearGradient>
+                <linearGradient id="diamondGrad" x1="45" y1="16" x2="75" y2="42" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#ffffff"/>
+                  <stop offset="0.5" stop-color="#d8bbff"/>
+                  <stop offset="1" stop-color="#b5b9ff"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </button>
+        </div>
+
+        <span class="text-xs font-bold uppercase tracking-widest text-purple-600 bg-pastel-lavender/40 px-4 py-1.5 rounded-full">
+          My Unbreakable Vow
+        </span>
+
+        <h2 class="font-serif text-4xl sm:text-5xl font-bold text-pastel-dark mt-4 mb-6">
+          My 4-Year Promise to You, Cupcakes
+        </h2>
+
+        <p class="text-pastel-muted text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-10">
+          Leaving to study for four years is the hardest step I've ever had to take, because it means stepping away from your warm hugs. 
+          But I am doing this to build the life we dream about. Consider this page my solemn promise ring to you:
+        </p>
+
+        <!-- 4 Pillars of Commitment -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left mb-10">
+          <div class="bg-white/75 p-5 rounded-2xl border border-pastel-pink/50 flex gap-4">
+            <div class="w-10 h-10 rounded-xl bg-pastel-pink/40 text-pink-600 flex items-center justify-center shrink-0 mt-0.5">
+              <i data-lucide="phone-call" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-pastel-dark text-sm sm:text-base">Never Too Busy For You</h4>
+              <p class="text-xs sm:text-sm text-pastel-muted mt-1">No matter how many exams or assignments I have, your good morning and goodnight texts will always be my favorite part of the day.</p>
+            </div>
+          </div>
+
+          <div class="bg-white/75 p-5 rounded-2xl border border-pastel-lavender/50 flex gap-4">
+            <div class="w-10 h-10 rounded-xl bg-pastel-lavender/40 text-purple-600 flex items-center justify-center shrink-0 mt-0.5">
+              <i data-lucide="shield-check" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-pastel-dark text-sm sm:text-base">Absolute Loyalty & Trust</h4>
+              <p class="text-xs sm:text-sm text-pastel-muted mt-1">My eyes, my heart, and my future belong exclusively to my Cupcakes. You will never have to doubt where my heart stands.</p>
+            </div>
+          </div>
+
+          <div class="bg-white/75 p-5 rounded-2xl border border-pastel-periwinkle/50 flex gap-4">
+            <div class="w-10 h-10 rounded-xl bg-pastel-periwinkle/40 text-indigo-600 flex items-center justify-center shrink-0 mt-0.5">
+              <i data-lucide="plane" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-pastel-dark text-sm sm:text-base">Counting Every Holiday</h4>
+              <p class="text-xs sm:text-sm text-pastel-muted mt-1">Every semester break, virtual movie night, and surprise visit will be planned around closing the distance between us.</p>
+            </div>
+          </div>
+
+          <div class="bg-white/75 p-5 rounded-2xl border border-pastel-peach/50 flex gap-4">
+            <div class="w-10 h-10 rounded-xl bg-pastel-peach/40 text-rose-600 flex items-center justify-center shrink-0 mt-0.5">
+              <i data-lucide="infinity" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-pastel-dark text-sm sm:text-base">Growing Together, Not Apart</h4>
+              <p class="text-xs sm:text-sm text-pastel-muted mt-1">In four years, when I walk back to you with my degree, the first thing I want to do is hold you and never let go.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive "Reasons Why I Love You" Generator -->
+        <div class="bg-gradient-to-r from-pastel-pink/30 via-white/80 to-pastel-lavender/30 rounded-2xl p-6 border border-white shadow-inner">
+          <p class="text-xs font-bold uppercase tracking-widest text-pastel-muted mb-2">
+            Reason <span id="reason-index">#1</span> Why I Love My Cupcakes
+          </p>
+          <p id="reason-text" class="font-serif italic text-xl sm:text-2xl text-pastel-dark min-h-[3.5rem] flex items-center justify-center px-4">
+            "The way your eyes light up whenever 'Bibbidi-Bobbidi' or 'Lavay' starts playing."
+          </p>
+          <button 
+            onclick="nextLoveReason()" 
+            class="mt-4 px-6 py-2.5 rounded-full bg-white hover:bg-pastel-cream text-pastel-dark font-semibold text-xs sm:text-sm shadow-sm border border-pastel-pink transition-all inline-flex items-center gap-2"
+          >
+            <i data-lucide="heart-handshake" class="w-4 h-4 text-pastel-peach"></i>
+            <span>Show Me Another Reason</span>
+          </button>
+        </div>
+
+        <!-- Romantic Signature -->
+        <div class="mt-10">
+          <p class="text-xs uppercase tracking-widest text-pastel-muted">Forever & Always Yours,</p>
+          <p class="font-script text-4xl sm:text-5xl text-pastel-dark mt-2">Your Future Husband ♥</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FOOTER
+  =========================================== -->
+  <footer class="py-10 text-center text-xs text-pastel-muted border-t border-pastel-pink/30 relative z-10">
+    <p>Handcrafted with endless love for <span class="font-semibold text-pastel-dark">Cupcakes</span> • 1 Year Down, 4 Years of Studying, A Lifetime to Go.</p>
+  </footer>
+
+  <!-- ==========================================
+       UNIVERSAL INTERACTIVE MODAL (Videos, Letters, Easter Eggs)
+  =========================================== -->
+  <div id="universal-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-pastel-dark/60 backdrop-blur-md">
+    <div class="glass-card bg-white/95 rounded-3xl max-w-2xl w-full p-6 sm:p-8 relative shadow-2xl border-2 border-white animate-float-slow" style="animation: none;">
+      <button onclick="closeModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-pastel-cream hover:bg-pastel-pink/50 text-pastel-dark flex items-center justify-center transition">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <div id="modal-body">
+        <!-- Dynamic Content Injected Here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       APPLICATION JAVASCRIPT & DATA
+  =========================================== -->
+  <script>
+    /*************************************************************
+     * 1. EASY CONFIGURATION (CUSTOMIZE YOUR DATES & PASSCODE HERE)
+     *************************************************************/
+    const CONFIG = {
+      nickname: "Cupcakes",
+      // Set your departure date and 4-year return date (YYYY-MM-DDTHH:MM:SS)
+      departureDate: "2025-09-01T08:00:00",
+      returnDate: "2029-09-01T18:00:00",
+      // Secret code to unlock the 30+ Video Vault (case-insensitive)
+      vaultPasscode: "CUPCAKE4"
+    };
+
+    /*************************************************************
+     * 2. TIMELINE MILESTONES (OUR 1-YEAR HISTORY)
+     *************************************************************/
+    const timelineMilestones = [
+      {
+        date: "Month 1 • The Spark",
+        title: "The Day Everything Changed",
+        location: "Our Very First Date",
+        rotation: "-rotate-2",
+        image: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80",
+        story: "I still remember how fast my heart was beating waiting for you. From the first moment you smiled at me, I knew my life would never be the same. Calling you my Cupcakes started as a cute thought, and quickly became my favorite word."
+      },
+      {
+        date: "Month 3 • Our Soundtrack",
+        title: "Jamming to 'Bibbidi-Bobbidi' & 'Lavay'",
+        location: "Late Night Drives & Laughs",
+        rotation: "rotate-2",
+        image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80",
+        story: "Whenever 'Bibbidi-Bobbidi' or 'Lavay' came on, the whole world turned into our private concert. Watching you sing along and be your goofy, adorable self made me fall head over heels all over again."
+      },
+      {
+        date: "Month 6 • Half a Year of Us",
+        title: "Unforgettable Sunset & Deep Talks",
+        location: "Our Favorite Spot",
+        rotation: "-rotate-1",
+        image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80",
+        story: "Six months flew by like six minutes. We talked for hours about our dreams, our fears, and where we wanted to be in five years. You became my best friend, my safe harbor, and my biggest inspiration."
+      },
+      {
+        date: "Month 9 • Through Thick & Thin",
+        title: "Preparing for the Big Journey",
+        location: "Coffee Dates & Study Sessions",
+        rotation: "rotate-2",
+        image: "https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=800&q=80",
+        story: "When the news of my 4-year study program became real, you held my hand and believed in us without hesitation. Your strength and encouragement gave me the courage to chase this dream for both of us."
+      },
+      {
+        date: "1 Year Anniversary • Forever Begins",
+        title: "365 Days of Loving My Cupcakes",
+        location: "Here & Now — Into Our Future",
+        rotation: "-rotate-2",
+        image: "https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?auto=format&fit=crop&w=800&q=80",
+        story: "One full year of pure magic. Even though I'm stepping onto a plane for the next four years, our story isn't pausing—it's just entering its next chapter. I love you endlessly, Cupcakes."
+      }
+    ];
+
+    /*************************************************************
+     * 3. 32 SECRET VIDEO VAULT MEMORIES
+     * Swap `videoUrl` with YouTube Embed URLs (https://www.youtube.com/embed/VIDEO_ID),
+     * Google Drive preview links, or direct .mp4 files!
+     *************************************************************/
+    const videoMemories = [
+      { id: 1, title: "1. Read This Before I Board The Plane", date: "Departure Day", category: "Future Letters", featured: true, thumb: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "My heartfelt message recorded the night before leaving for my 4-year study journey. I love you, Cupcakes!" },
+      { id: 2, title: "2. Dancing to 'Bibbidi-Bobbidi' Together", date: "Month 2", category: "Favorites", featured: true, thumb: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "That time we couldn't stop replaying Bibbidi-Bobbidi and laughing until our stomachs hurt." },
+      { id: 3, title: "3. 'Lavay' Car Ride Karaoke", date: "Month 3", category: "Favorites", featured: true, thumb: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "You hitting every beat to Lavay in the passenger seat—my favorite concert ever." },
+      { id: 4, title: "4. Our First Dessert & Cupcake Date", date: "Month 1", category: "Dates & Trips", featured: true, thumb: "https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "Where the nickname 'Cupcakes' officially became legendary." },
+      { id: 5, title: "5. Golden Hour Walk in the Park", date: "Month 4", category: "Dates & Trips", featured: true, thumb: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "The sunlight caught your hair and I couldn't stop filming you." },
+      { id: 6, title: "6. Rainy Day Cozy Café Vlog", date: "Month 4", category: "Dates & Trips", featured: false, thumb: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "Two warm drinks, rain on the window, and your hand in mine." },
+      { id: 7, title: "7. When You Tried Cooking For Us", date: "Month 5", category: "Favorites", featured: false, thumb: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "10/10 chef, 100/10 cuteness." },
+      { id: 8, title: "8. Surprise Flowers Reaction", date: "Month 5", category: "Favorites", featured: false, thumb: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "Your smile when you saw the bouquet is permanently saved in my brain." },
+      { id: 9, title: "9. 6-Month Anniversary Dinner", date: "Month 6", category: "Dates & Trips", featured: false, thumb: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "Half a year of loving you, celebrating over candlelight." },
+      { id: 10, title: "10. Late Night Ice Cream Run", date: "Month 6", category: "Dates & Trips", featured: false, thumb: "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "11 PM cravings are always better with my Cupcakes." },
+      { id: 11, title: "11. Photo Booth Goofiness", date: "Month 7", category: "Favorites", featured: false, thumb: "https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "Behind-the-scenes video of our silly photo strips." },
+      { id: 12, title: "12. Beach Sunset & Waves", date: "Month 7", category: "Dates & Trips", featured: false, thumb: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "Writing our initials in the sand before the tide came in." },
+      { id: 13, title: "13. Arcade Championship Night", date: "Month 8", category: "Dates & Trips", featured: false, thumb: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "I still let you win at air hockey (okay fine, you beat me fair and square)." },
+      { id: 14, title: "14. Winning That Plushie For You", date: "Month 8", category: "Favorites", featured: false, thumb: "https://images.unsplash.com/photo-1559454403-b8fb88521f11?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "The claw machine miracle! Hug it whenever you miss me." },
+      { id: 15, title: "15. Sleepy Head on My Shoulder", date: "Month 8", category: "Favorites", featured: false, thumb: "https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "You fell asleep during the movie and looked like an absolute angel." },
+      { id: 16, title: "16. Stargazing on the Rooftop", date: "Month 9", category: "Dates & Trips", featured: false, thumb: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "Looking up at the same sky we'll be sharing for the next 4 years." },
+      { id: 17, title: "17. Shopping Spree & Trying Silly Hats", date: "Month 9", category: "Dates & Trips", featured: false, thumb: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "Every outfit looked stunning on you." },
+      { id: 18, title: "18. Study Date (Mostly Giggling)", date: "Month 10", category: "Favorites", featured: false, thumb: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "Zero pages read, 100% distracted by how cute you are." },
+      { id: 19, title: "19. Birthday Surprise Montage", date: "Month 10", category: "Favorites", featured: false, thumb: "https://images.unsplash.com/photo-1464349153735-7db50ed83c84?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "Celebrating the day my favorite person was born." },
+      { id: 20, title: "20. Botanical Garden Stroll", date: "Month 10", category: "Dates & Trips", featured: false, thumb: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "Surrounded by pastel blooms, yet you were still the prettiest flower there." },
+      { id: 21, title: "21. Picnic Under the Trees", date: "Month 11", category: "Dates & Trips", featured: false, thumb: "https://images.unsplash.com/photo-1526401485004-46910ecc8e51?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "Strawberries, pastries, and endless laughter." },
+      { id: 22, title: "22. Matching Outfits Day", date: "Month 11", category: "Favorites", featured: false, thumb: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "Power couple energy at its finest." },
+      { id: 23, title: "23. Our 1-Year Anniversary Toast", date: "Month 12", category: "Favorites", featured: true, thumb: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "Cheers to 365 days behind us and a lifetime ahead." },
+      { id: 24, title: "24. Packing My Suitcase With You", date: "Pre-Departure", category: "Future Letters", featured: false, thumb: "https://images.unsplash.com/photo-1530521954074-e64f6810b32d?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "Sneaking your hoodie and perfume into my luggage." },
+      { id: 25, title: "25. Watch This on Year 1 of Distance", date: "Future Milestone", category: "Future Letters", featured: false, thumb: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "One year down, three to go! I'm so proud of us." },
+      { id: 26, title: "26. Watch This on Year 2 (Halfway!)", date: "Future Milestone", category: "Future Letters", featured: false, thumb: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "We made it to the halfway mark, Cupcakes!" },
+      { id: 27, title: "27. Watch This on Year 3 (Almost Home)", date: "Future Milestone", category: "Future Letters", featured: false, thumb: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "Just one final year left before I'm home for good." },
+      { id: 28, title: "28. Watch When You Can't Sleep", date: "Anytime", category: "Future Letters", featured: false, thumb: "https://images.unsplash.com/photo-1511295742362-92c96b1cf484?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "A calm bedtime story and lullaby from me to help you drift off." },
+      { id: 29, title: "29. Watch When You Need a Good Laugh", date: "Anytime", category: "Future Letters", featured: false, thumb: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "A compilation of all my most embarrassing bloopers just to make you smile." },
+      { id: 30, title: "30. Watch When You Doubt Yourself", date: "Anytime", category: "Future Letters", featured: false, thumb: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "A reminder of how smart, capable, and breathtakingly strong you are." },
+      { id: 31, title: "31. Watch on Our Future Anniversaries", date: "Anniversary", category: "Future Letters", featured: false, thumb: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "Raising a glass across the screen until we clink glasses in person." },
+      { id: 32, title: "32. Graduation & Coming Home to You", date: "Year 4 Finale", category: "Future Letters", featured: true, thumb: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=80", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: "The final video in the vault: my promise of the exact moment I run to hug you at the airport." }
+    ];
+
+    /*************************************************************
+     * 4. "OPEN WHEN" LETTERS DATA
+     *************************************************************/
+    const openWhenLetters = [
+      {
+        title: "Open When You Miss Me",
+        subtitle: "For heavy-hearted evenings",
+        icon: "heart-crack",
+        letter: "My dearest Cupcakes,\n\nTake a deep breath and place your hand over your heart. Feel that steady beat? That's how constant my love for you is, no matter how many miles are between us right now.\n\nMissing each other just proves how lucky we are to have someone worth missing this badly. Put on my hoodie, play 'Bibbidi-Bobbidi' softly, and text me right now—even if I'm asleep or in class, I will reply the second I see it. Every second that ticks on our countdown clock is one second closer to our next hug."
+      },
+      {
+        title: "Open When You're Stressed",
+        subtitle: "When life feels overwhelming",
+        icon: "cloud-rain",
+        letter: "Hey Cupcakes,\n\nPause for 60 seconds with me. Drop your shoulders away from your ears, unclench your jaw, and take a slow sip of water.\n\nI've watched you overcome so much over the past year, and I know firsthand how resilient and brilliant you are. Whatever is stressing you out today is temporary—you are going to handle it with grace, and I am cheering for you from afar. Don't forget to treat yourself to something sweet tonight!"
+      },
+      {
+        title: "Open When You Can't Sleep",
+        subtitle: "For 2 AM overthinking",
+        icon: "moon-star",
+        letter: "Sweetest Cupcakes,\n\nIf you're reading this late at night, close your eyes for a moment and imagine we're back on one of our lazy Sunday afternoons. Imagine me brushing your hair back and telling you everything is going to be alright.\n\nThe distance can feel loudest at night, so play our 'Lavay' chill mix, hug your pillow tight, and meet me in your dreams. Goodnight, my love."
+      },
+      {
+        title: "Open When It's Our Anniversary",
+        subtitle: "Celebrating another year of us",
+        icon: "sparkles",
+        letter: "Happy Anniversary, my Cupcakes! 🧁✨\n\nAnother year of loving you is the greatest privilege of my life. Even if we are celebrating across screens today, every single memory we've made—and every future anniversary we'll spend under the same roof—makes my heart overflow.\n\nThank you for holding onto our promise. I love you more today than yesterday, and less than tomorrow."
+      },
+      {
+        title: "Open When Distance Feels Too Long",
+        subtitle: "When 4 years sounds scary",
+        icon: "compass",
+        letter: "My Love,\n\nI know four years can sound like a mountain when we look at the whole thing at once. So let's not climb the whole mountain today—let's just take today's step together.\n\nFour years is just a chapter in a book that is going to last sixty, seventy, eighty years together. Every lecture I attend and every exam I pass is building the foundation for our home. Hold my hand through the screen; we've got this."
+      },
+      {
+        title: "Open When You Need a Smile",
+        subtitle: "Instant mood booster",
+        icon: "smile-plus",
+        letter: "Hi Cupcakes! 🧁\n\nQuick reminder:\n1. You are effortlessly the cutest human alive.\n2. Your laugh when we listen to 'Bibbidi-Bobbidi' and 'Lavay' cures 100% of my bad days.\n3. Right this very second, someone in another classroom/library is daydreaming about your smile instead of paying attention to the professor.\n\nNow show me that gorgeous smile!"
+      }
+    ];
+
+    /*************************************************************
+     * 5. REASONS WHY I LOVE YOU & EASTER EGG MESSAGES
+     *************************************************************/
+    const loveReasons = [
+      "The way your eyes light up whenever 'Bibbidi-Bobbidi' or 'Lavay' starts playing.",
+      "How calling you 'Cupcakes' instantly makes my whole day ten times sweeter.",
+      "Your unwavering patience and belief in us as I embark on this 4-year study journey.",
+      "The way you make even a simple grocery run or coffee date feel like a fairytale.",
+      "Your contagious laugh that I've memorized down to the very last note.",
+      "How safe, understood, and at home I feel the moment you hug me.",
+      "Because out of 8 billion people on this planet, my soul only recognizes yours."
+    ];
+
+    const easterEggMessages = {
+      1: {
+        title: "Secret #1 Found: The Floating Cupcake! 🧁",
+        body: "You clicked the magic cupcake! Fun fact: Did you know why I call you 'Cupcakes' plural instead of singular? Because one cupcake could never hold all the sweetness you bring into my life!"
+      },
+      2: {
+        title: "Secret #2 Found: Our Wishing Star! ⭐",
+        body: "You found the hidden star in the header! Inside Joke Alert: Remember when we played 'Bibbidi-Bobbidi' & 'Lavay' on repeat until we invented our own ridiculous choreography? Never stop dancing for me, Cupcakes."
+      },
+      3: {
+        title: "Secret #3 Found: The Diamond Vow! 💍",
+        body: "You tapped the diamond on your digital promise ring! One day, when these 4 years of studying are complete, I'm upgrading this digital ring to a real one on your finger. I love you forever!"
+      }
+    };
+
+    /*************************************************************
+     * 6. RENDER & LOGIC FUNCTIONS
+     *************************************************************/
+    
+    // --- A. Live 4-Year Countdown Timer ---
+    function updateCountdown() {
+      const start = new Date(CONFIG.departureDate).getTime();
+      const end = new Date(CONFIG.returnDate).getTime();
+      const now = new Date().getTime();
+
+      const diff = Math.max(0, end - now);
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / 1000 / 60) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+      document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
+
+      // Calculate Progress Percentage
+      const totalDuration = end - start;
+      const elapsed = Math.max(0, now - start);
+      const percentage = Math.min(100, Math.max(5, ((elapsed / totalDuration) * 100))).toFixed(2);
+      document.getElementById('journey-bar').style.width = `${percentage}%`;
+      document.getElementById('journey-percent').textContent = `${percentage}% of Our Distance Completed`;
+    }
+
+    // --- B. Render 1-Year Timeline ---
+    function renderTimeline() {
+      const container = document.getElementById('timeline-container');
+      container.innerHTML = timelineMilestones.map((item, idx) => {
+        const isEven = idx % 2 === 0;
+        return `
+          <div class="relative flex flex-col md:flex-row items-center ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8">
+            <!-- Timeline Center Heart Node -->
+            <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-11 h-11 rounded-full bg-white border-4 border-pastel-pink shadow-md items-center justify-center text-pink-500 z-10">
+              <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+            </div>
+
+            <!-- Polaroid Image Side -->
+            <div class="w-full md:w-1/2 flex ${isEven ? 'md:justify-end md:pr-10' : 'md:justify-start md:pl-10'} justify-center">
+              <div class="polaroid ${item.rotation} max-w-xs w-full">
+                <div class="aspect-[4/3] overflow-hidden rounded bg-pastel-cream mb-3">
+                  <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover" loading="lazy" />
+                </div>
+                <p class="font-script text-2xl text-center text-pastel-dark">${item.location}</p>
+              </div>
+            </div>
+
+            <!-- Story Text Side -->
+            <div class="w-full md:w-1/2 ${isEven ? 'md:pl-10' : 'md:pr-10'}">
+              <div class="glass-card glass-card-hover rounded-3xl p-6 sm:p-8">
+                <span class="inline-block text-xs font-bold uppercase tracking-widest text-pink-500 bg-pastel-pink/30 px-3 py-1 rounded-full mb-3">
+                  ${item.date}
+                </span>
+                <h3 class="font-serif text-2xl sm:text-3xl font-bold text-pastel-dark mb-3">${item.title}</h3>
+                <p class="text-sm sm:text-base text-pastel-muted leading-relaxed">${item.story}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // --- C. Secret Video Vault Logic ---
+    function unlockVault(e) {
+      e.preventDefault();
+      const input = document.getElementById('vault-input');
+      const error = document.getElementById('vault-error');
+      const box = document.getElementById('passcode-box');
+
+      if (input.value.trim().toUpperCase() === CONFIG.vaultPasscode.toUpperCase()) {
+        error.classList.add('hidden');
+        document.getElementById('vault-locked').classList.add('hidden');
+        const unlocked = document.getElementById('vault-unlocked');
+        unlocked.classList.remove('hidden');
+        renderVideos('all');
+        lucide.createIcons();
+      } else {
+        error.classList.remove('hidden');
+        box.classList.remove('animate-shake');
+        void box.offsetWidth; // trigger reflow
+        box.classList.add('animate-shake');
+      }
+    }
+
+    function renderVideos(category) {
+      // Render Featured Carousel
+      const carousel = document.getElementById('video-carousel');
+      const featuredList = videoMemories.filter(v => v.featured);
+      carousel.innerHTML = featuredList.map(v => `
+        <div onclick="openVideoModal(${v.id})" class="snap-start shrink-0 w-72 sm:w-80 glass-card glass-card-hover rounded-2xl overflow-hidden cursor-pointer group">
+          <div class="relative aspect-video bg-pastel-dark overflow-hidden">
+            <img src="${v.thumb}" alt="${v.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90" />
+            <div class="absolute inset-0 bg-gradient-to-t from-pastel-dark/70 via-transparent to-transparent flex items-center justify-center">
+              <div class="w-12 h-12 rounded-full bg-white/90 text-pink-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                <i data-lucide="play" class="w-5 h-5 fill-current ml-0.5"></i>
+              </div>
+            </div>
+            <span class="absolute top-2.5 left-2.5 bg-pastel-peach/90 text-pastel-dark text-[10px] font-bold px-2.5 py-0.5 rounded-full">
+              Featured
+            </span>
+          </div>
+          <div class="p-4">
+            <p class="text-[11px] font-semibold text-pink-500">${v.date}</p>
+            <h4 class="font-bold text-pastel-dark text-sm truncate mt-0.5">${v.title}</h4>
+          </div>
+        </div>
+      `).join('');
+
+      // Render Filtered Grid
+      const filtered = category === 'all' ? videoMemories : videoMemories.filter(v => v.category === category);
+      document.getElementById('video-count-label').textContent = filtered.length;
+
+      const grid = document.getElementById('video-grid');
+      grid.innerHTML = filtered.map(v => `
+        <div onclick="openVideoModal(${v.id})" class="glass-card glass-card-hover rounded-2xl overflow-hidden cursor-pointer group flex flex-col">
+          <div class="relative aspect-video bg-pastel-dark overflow-hidden">
+            <img src="${v.thumb}" alt="${v.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90" loading="lazy" />
+            <div class="absolute inset-0 bg-pastel-dark/25 group-hover:bg-pastel-dark/40 transition flex items-center justify-center">
+              <div class="w-10 h-10 rounded-full bg-white/90 text-pastel-dark flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                <i data-lucide="play" class="w-4 h-4 fill-current ml-0.5"></i>
+              </div>
+            </div>
+            <span class="absolute bottom-2 right-2 bg-pastel-dark/80 text-white text-[10px] px-2 py-0.5 rounded">
+              ${v.category}
+            </span>
+          </div>
+          <div class="p-4 flex-1 flex flex-col justify-between">
+            <div>
+              <p class="text-[11px] font-semibold text-pastel-muted">${v.date}</p>
+              <h4 class="font-bold text-pastel-dark text-sm mt-0.5 line-clamp-1">${v.title}</h4>
+              <p class="text-xs text-pastel-muted mt-1 line-clamp-2">${v.desc}</p>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    function filterVideos(category) {
+      document.querySelectorAll('.vault-filter-btn').forEach(btn => {
+        btn.classList.remove('bg-pastel-dark', 'text-white');
+        btn.classList.add('bg-white/80', 'text-pastel-dark');
+      });
+      event.currentTarget.classList.remove('bg-white/80', 'text-pastel-dark');
+      event.currentTarget.classList.add('bg-pastel-dark', 'text-white');
+      renderVideos(category);
+    }
+
+    function scrollCarousel(direction) {
+      const carousel = document.getElementById('video-carousel');
+      carousel.scrollBy({ left: direction * 320, behavior: 'smooth' });
+    }
+
+    function openVideoModal(id) {
+      const video = videoMemories.find(v => v.id === id);
+      if (!video) return;
+
+      const isEmbed = video.videoUrl.includes('youtube.com') || video.videoUrl.includes('drive.google.com');
+      const playerHtml = isEmbed
+        ? `<iframe src="${video.videoUrl}" class="w-full aspect-video rounded-2xl shadow-inner bg-black" allow="autoplay; encrypted-media" allowfullscreen></iframe>`
+        : `<video src="${video.videoUrl}" controls autoplay class="w-full aspect-video rounded-2xl shadow-inner bg-black"></video>`;
+
+      openModal(`
+        <div class="space-y-4">
+          <span class="text-xs font-bold uppercase tracking-widest text-pink-500 bg-pastel-pink/30 px-3 py-1 rounded-full">
+            ${video.date} • ${video.category}
+          </span>
+          <h3 class="font-serif text-2xl sm:text-3xl font-bold text-pastel-dark pr-8">${video.title}</h3>
+          ${playerHtml}
+          <p class="text-sm sm:text-base text-pastel-muted leading-relaxed bg-pastel-cream/70 p-4 rounded-2xl border border-pastel-pink/40">
+            ${video.desc}
+          </p>
+        </div>
+      `);
+    }
+
+    // --- D. Render "Open When" Envelopes ---
+    function renderEnvelopes() {
+      const grid = document.getElementById('envelopes-grid');
+      grid.innerHTML = openWhenLetters.map((item, idx) => `
+        <div onclick="openLetterModal(${idx})" class="glass-card glass-card-hover rounded-3xl p-6 cursor-pointer relative overflow-hidden group">
+          <!-- Envelope Top Flap Accent -->
+          <div class="flex items-center justify-between mb-6">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-pastel-muted">Tap to Unseal</span>
+            <div class="w-11 h-11 rounded-full wax-seal flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+              <i data-lucide="${item.icon}" class="w-5 h-5"></i>
+            </div>
+          </div>
+          <h3 class="font-serif text-2xl font-bold text-pastel-dark mb-1 group-hover:text-pink-500 transition-colors">
+            ${item.title}
+          </h3>
+          <p class="text-xs text-pastel-muted mb-4">${item.subtitle}</p>
+          <div class="pt-4 border-t border-pastel-pink/40 flex items-center justify-between text-xs font-semibold text-pastel-dark">
+            <span>For: Cupcakes 🧁</span>
+            <span class="flex items-center gap-1 text-pink-500 group-hover:translate-x-1 transition-transform">
+              Open Envelope <i data-lucide="mail-open" class="w-3.5 h-3.5"></i>
+            </span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openLetterModal(idx) {
+      const item = openWhenLetters[idx];
+      openModal(`
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full wax-seal flex items-center justify-center text-white">
+              <i data-lucide="${item.icon}" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="font-serif text-2xl sm:text-3xl font-bold text-pastel-dark">${item.title}</h3>
+              <p class="text-xs text-pastel-muted">${item.subtitle}</p>
+            </div>
+          </div>
+          <div class="bg-pastel-cream/80 p-6 rounded-2xl border border-pastel-pink/60 font-serif text-lg sm:text-xl text-pastel-dark whitespace-pre-line leading-relaxed">
+            ${item.letter}
+          </div>
+        </div>
+      `);
+      lucide.createIcons();
+    }
+
+    // --- E. Reasons Why I Love You & Easter Eggs ---
+    let currentReasonIdx = 0;
+    function nextLoveReason() {
+      currentReasonIdx = (currentReasonIdx + 1) % loveReasons.length;
+      document.getElementById('reason-index').textContent = `#${currentReasonIdx + 1}`;
+      document.getElementById('reason-text').textContent = `"${loveReasons[currentReasonIdx]}"`;
+    }
+
+    const foundEggs = new Set();
+    function triggerEasterEgg(id) {
+      foundEggs.add(id);
+      document.getElementById('egg-counter').textContent = foundEggs.size;
+      const egg = easterEggMessages[id];
+      openModal(`
+        <div class="text-center space-y-4 py-2">
+          <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-pastel-peach to-pastel-lavender text-white mx-auto flex items-center justify-center shadow-lg">
+            <i data-lucide="party-popper" class="w-8 h-8"></i>
+          </div>
+          <h3 class="font-serif text-2xl sm:text-3xl font-bold text-pastel-dark">${egg.title}</h3>
+          <p class="text-sm sm:text-base text-pastel-muted leading-relaxed max-w-md mx-auto">${egg.body}</p>
+          <p class="text-xs font-bold uppercase tracking-widest text-pink-500">
+            Secrets Found: ${foundEggs.size} / 3
+          </p>
+        </div>
+      `);
+      lucide.createIcons();
+    }
+
+    function showEasterEggHint() {
+      openModal(`
+        <div class="space-y-3 text-center">
+          <h3 class="font-serif text-2xl font-bold text-pastel-dark">3 Hidden Inside Jokes & Secrets</h3>
+          <p class="text-xs sm:text-sm text-pastel-muted">Can you find all 3 hidden clickable surprises on this page, Cupcakes?</p>
+          <ul class="text-left text-xs sm:text-sm space-y-2 bg-pastel-cream p-4 rounded-2xl border border-pastel-pink/50">
+            <li>🧁 <strong>Hint 1:</strong> Look at the floating cupcake in the bottom-left corner.</li>
+            <li>⭐ <strong>Hint 2:</strong> Look closely at the tiny star next to your nickname at the very top of the page.</li>
+            <li>💍 <strong>Hint 3:</strong> Tap the glowing diamond on your Digital Promise Ring near the bottom.</li>
+          </ul>
+        </div>
+      `);
+    }
+
+    // --- F. Universal Modal Helpers ---
+    function openModal(htmlContent) {
+      const modal = document.getElementById('universal-modal');
+      document.getElementById('modal-body').innerHTML = htmlContent;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('universal-modal');
+      // Stop any playing video inside modal
+      document.getElementById('modal-body').innerHTML = '';
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // Close modal on backdrop click
+    document.getElementById('universal-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'universal-modal') closeModal();
+    });
+
+    // --- G. Music Player ("Bibbidi-Bobbidi" & "Lavay" + Gentle Web Audio Music Box Synth) ---
+    const playlist = [
+      { title: "Bibbidi-Bobbidi (Our Magic Vibe)", artist: "Cupcakes' #1 Favorite Jam", notes: [523.25, 659.25, 783.99, 1046.50, 783.99, 659.25] },
+      { title: "Lavay (Late Night Cozy Mix)", artist: "Cupcakes' #2 Favorite Jam", notes: [440.00, 554.37, 659.25, 880.00, 659.25, 554.37] }
+    ];
+    let currentTrack = 0;
+    let isPlaying = false;
+    let synthInterval = null;
+    let audioCtx = null;
+
+    function playMusicBoxNote(freq) {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.4);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 1.4);
+    }
+
+    function toggleMusic() {
+      isPlaying = !isPlaying;
+      const vinyl = document.getElementById('vinyl-disc');
+      const playBtn = document.getElementById('play-btn');
+
+      if (isPlaying) {
+        vinyl.classList.add('animate-spin-slow');
+        playBtn.innerHTML = `<i data-lucide="pause" class="w-4 h-4 fill-current"></i>`;
+        let noteIdx = 0;
+        synthInterval = setInterval(() => {
+          const notes = playlist[currentTrack].notes;
+          playMusicBoxNote(notes[noteIdx % notes.length]);
+          noteIdx++;
+        }, 650);
+      } else {
+        vinyl.classList.remove('animate-spin-slow');
+        playBtn.innerHTML = `<i data-lucide="play" class="w-4 h-4 fill-current ml-0.5"></i>`;
+        clearInterval(synthInterval);
+      }
+      lucide.createIcons();
+    }
+
+    function nextTrack() {
+      currentTrack = (currentTrack + 1) % playlist.length;
+      document.getElementById('track-title').textContent = playlist[currentTrack].title;
+      document.getElementById('track-artist').textContent = playlist[currentTrack].artist;
+    }
+
+    // --- H. Floating Hearts & Stars Background Canvas ---
+    function initParticles() {
+      const canvas = document.getElementById('particle-canvas');
+      const ctx = canvas.getContext('2d');
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      const particles = Array.from({ length: 28 }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        size: Math.random() * 10 + 6,
+        speedY: Math.random() * 0.4 + 0.15,
+        speedX: (Math.random() - 0.5) * 0.3,
+        opacity: Math.random() * 0.45 + 0.15,
+        color: ['#ffb5a7', '#ffcad4', '#d8bbff', '#b5b9ff'][Math.floor(Math.random() * 4)]
+      }));
+
+      function drawHeart(x, y, size, color, alpha) {
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        const topCurveHeight = size * 0.3;
+        ctx.moveTo(x, y + topCurveHeight);
+        ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + topCurveHeight);
+        ctx.bezierCurveTo(x - size / 2, y + (size + topCurveHeight) / 2, x, y + (size + topCurveHeight) / 1.5, x, y + size);
+        ctx.bezierCurveTo(x, y + (size + topCurveHeight) / 1.5, x + size / 2, y + (size + topCurveHeight) / 2, x + size / 2, y + topCurveHeight);
+        ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + topCurveHeight);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach(p => {
+          p.y -= p.speedY;
+          p.x += p.speedX;
+          if (p.y < -20) {
+            p.y = height + 20;
+            p.x = Math.random() * width;
+          }
+          drawHeart(p.x, p.y, p.size, p.color, p.opacity);
+        });
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // --- Initialize Everything on Load ---
+    window.addEventListener('DOMContentLoaded', () => {
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+      renderTimeline();
+      renderEnvelopes();
+      initParticles();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
